@@ -67,3 +67,8 @@ desktop.ini
 # Crash reports
 # =========================
 hs_err_pid*
+
+# =========================
+# Optional but recommended
+# =========================
+.kotlin/
