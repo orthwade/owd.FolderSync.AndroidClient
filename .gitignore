@@ -1,34 +1,69 @@
-# Gradle files
+# =========================
+# Gradle
+# =========================
 .gradle/
 build/
+**/build/
 
-# Local configuration file (sdk path, etc)
+# =========================
+# Local SDK / machine config
+# =========================
 local.properties
 
-# Log/OS Files
-*.log
-
-# Android Studio generated files and folders
+# =========================
+# Android Studio / IntelliJ
+# =========================
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
 captures/
 .externalNativeBuild/
 .cxx/
-*.aab
+
+# =========================
+# Build artifacts
+# =========================
 *.apk
+*.aab
+*.aar
 output-metadata.json
 
-# IntelliJ
-*.iml
-.idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
-
-# Keystore files
+# =========================
+# Keystores (ABSOLUTELY NEVER)
+# =========================
 *.jks
 *.keystore
+*.pkcs12
+*.p12
 
-# Google Services (e.g. APIs or Firebase)
-google-services.json
+# =========================
+# Logs / temp files
+# =========================
+*.log
+*.tmp
+*.swp
 
-# Android Profiling
+# =========================
+# Profiling / debugging
+# =========================
 *.hprof
+*.trace
+
+# =========================
+# OS-specific garbage
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Kotlin / Java compiler output
+# =========================
+*.class
+
+# =========================
+# Crash reports
+# =========================
+hs_err_pid*
