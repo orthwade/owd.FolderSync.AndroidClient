@@ -12,10 +12,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.Button
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.documentfile.provider.DocumentFile
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.unit.dp
+
 import owd.foldersync.client.android.ui.theme.FolderSyncTheme
 
 class MainActivity : ComponentActivity() {
@@ -37,12 +49,58 @@ class MainActivity : ComponentActivity() {
 //        enableEdgeToEdge()
         setContent {
             FolderSyncTheme {
-                PickFolderScreen {
-                    pickFolderLauncher.launch(null)
-                }
+//                PickFolderScreen {
+//                    pickFolderLauncher.launch(null)
+//                }
+                ServerScreen()
             }
         }
     }
+
+    @Composable
+    fun ServerScreen() {
+        var message by remember { mutableStateOf("Idle") }
+
+        Column(modifier = Modifier.padding(16.dp)) {
+
+            Button(onClick = {
+                message = "Connecting..."
+                connectToServer {
+                    result ->
+                    message = result
+                }
+            }) {
+                Text("Check server")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(text = message)
+        }
+    }
+
+    private fun connectToServer(onResult: (String) -> Unit) {
+
+        Thread {
+            try {
+                val url = java.net.URL("https://example.com")
+                val connection = url.openConnection() as java.net.HttpURLConnection
+                connection.connectTimeout = 3000
+                connection.readTimeout = 3000
+                connection.requestMethod = "GET"
+
+                val code = connection.responseCode
+                connection.disconnect()
+
+                runOnUiThread {
+                    onResult("Success! HTTP $code")
+                }
+            } catch (e: Exception) {
+                onResult("ERROR: ${e.message}")
+            }
+        }.start()
+    }
+
     @Composable
     fun PickFolderScreen(onPickFolder: () -> Unit) {
         Scaffold { padding ->
