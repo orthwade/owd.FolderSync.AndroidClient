@@ -127,7 +127,8 @@ class MainActivity : ComponentActivity() {
             ?: folderSync.createDirectory("folder_000")
             ?: return
 
-        val testFile = folder000.createFile("text/plain", "test.txt") ?: return
+        val testFile = folder000.createFile("text/plain",
+            "test.txt") ?: return
 
         contentResolver.openOutputStream(testFile.uri)?.use { out ->
             out.write("Hello from Android SAF".toByteArray())

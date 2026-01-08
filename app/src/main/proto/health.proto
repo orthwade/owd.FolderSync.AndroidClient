@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_package = "owd.foldersync.grpc";
+option java_multiple_files = true;
+
+service HealthService {
+  rpc Check (HealthRequest) returns (HealthReply);
+}
+
+message HealthRequest {}
+
+message HealthReply {
+  string status = 1;
+}
