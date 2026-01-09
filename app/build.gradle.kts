@@ -43,7 +43,21 @@ android {
         compose = true
     }
 }
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.25.1"
+    }
 
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                register("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
 
 dependencies {
     implementation(libs.androidx.core.ktx)
