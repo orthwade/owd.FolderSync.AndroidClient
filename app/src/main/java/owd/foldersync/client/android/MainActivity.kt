@@ -77,6 +77,46 @@ class MainActivity : ComponentActivity() {
             Text(text = message)
         }
     }
+    @Composable
+    fun TestGrpc() {
+        var status by remember { mutableStateOf("Idle") }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+
+            Button(onClick = {
+                status = "Calling gRPC..."
+                testGrpcCall { result ->
+                    status = result
+                }
+            }) {
+                Text("Test gRPC")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(text = status)
+        }
+    }
+    private fun testGrpcCall(onResult: (String) -> Unit) {
+        Thread {
+            try {
+                // TODO: Replace with real gRPC channel + stub
+                Thread.sleep(1000)
+
+                runOnUiThread {
+                    onResult("gRPC call successful")
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    onResult("gRPC ERROR: ${e.message}")
+                }
+            }
+        }.start()
+    }
 
     private fun connectToServer(onResult: (String) -> Unit) {
 
